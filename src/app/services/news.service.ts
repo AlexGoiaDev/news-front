@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { NewsModel } from '../models/news.model';
 import { NewsResponseModel } from '../models/news-response.model';
 import { Observable } from 'rxjs';
+import { NewsResponsePaginationModel } from '../models/news-response-pagination.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class NewsService {
 
   constructor(private http: HttpClient) { }
 
-  getNews() {
-    return this.http.get(this.url);
+  getNews(): Observable<NewsResponsePaginationModel> {
+    return this.http.get<NewsResponsePaginationModel>(this.url);
   }
 
   deleteNews(id): Observable<NewsResponseModel> {
