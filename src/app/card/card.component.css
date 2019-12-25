@@ -1,0 +1,21 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons span {
+  align-self: center;
+}
+
+.card {
+  position: relative;
+}
+
+.card > .archived-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: gray;
+  color: white;
+  padding: 0.5em;
+}

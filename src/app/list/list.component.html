@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-sm">
+    <h2>News</h2>
+    <app-card *ngFor="let new of news" [new]="new" (archiveNew)="archiveNews($event)"></app-card>
+  </div>
+  <div class="col-sm">
+    <h2>Archived</h2>
+    <app-card *ngFor="let new of archivedNews" [new]="new" (deleteNew)="deleteNew($event)"></app-card>
+  </div>
+</div>
