@@ -11,7 +11,7 @@ export class NewsService {
   constructor(private http: HttpClient) { }
 
   getNews() {
-    return this.http.get(this.url + '&limit=20');
+    return this.http.get(this.url);
   }
 
   deleteNews(id) {

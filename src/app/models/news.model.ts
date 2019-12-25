@@ -1,4 +1,4 @@
-export interface NewModel {
+export interface NewsModel {
   title: string;
   description: string;
   date: Date;

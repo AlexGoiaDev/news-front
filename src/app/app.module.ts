@@ -4,10 +4,9 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ArchivedModule } from './archived/archived.module';
-import { NewsModule } from './news/news.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { CardModule } from './card/card.module';
 
 
 @NgModule({
@@ -18,10 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    ArchivedModule,
-    NewsModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

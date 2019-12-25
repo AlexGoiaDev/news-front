@@ -1,5 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { NewModel } from './models/news.model';
+import { NewsModel } from './models/news.model';
+import { NewsService } from './services/news.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -8,34 +10,47 @@ import { NewModel } from './models/news.model';
 })
 export class AppComponent implements OnInit {
   title = 'front';
-  archivedNews: NewModel[];
-  news: NewModel[];
+  archivedNews: NewsModel[];
+  news: NewsModel[];
 
-  constructor() {
+  constructor(private newsService: NewsService) {
 
   }
 
   ngOnInit() {
-    this.archivedNews = [{
-      content: 'Contenido',
-      author: 'Álex Goia',
-      date: new Date(),
-      description: 'Descripción',
-      title: 'Holi',
-      archiveDate: new Date(),
-      _id: '1'
-    }];
-
-    this.news = [{
-      content: 'Contenido',
-      author: 'Álex Goia',
-      date: new Date(),
-      description: 'Descripción',
-      title: 'Holi',
-      _id: '1'
-    }];
+    this.getAllNews();
   }
 
 
+
+  getAllNews() {
+    // TODO: AÑADIR MODELADO
+    this.newsService.getNews().pipe(take(1)).subscribe((res: any) => {
+      if (res && res.data && res.data.docs && res.data.docs.length > 0) {
+        this.archivedNews = res.data.docs.filter(doc => doc.archiveDate !== undefined);
+        this.news = res.data.docs.filter(doc => doc.archiveDate === undefined);
+      }
+    });
+  }
+
+  deleteNew(id) {
+    this.newsService.deleteNews(id).pipe(take(1)).subscribe((res: any) => {
+      if (res && res.data) {
+        this.archivedNews = this.archivedNews.filter(doc => doc._id !== id);
+      }
+    });
+  }
+
+  archiveNews(id) {
+    this.newsService.updateNews(id, { archiveDate: new Date() }).pipe(take(1)).subscribe((res: any) => {
+      if (res && res.data) {
+        const newsToMove = this.news.find(doc => doc._id === id);
+        if (newsToMove) {
+          this.news = this.news.filter(doc => doc._id !== id);
+          this.archivedNews.unshift(res.data);
+        }
+      }
+    });
+  }
 
 }
