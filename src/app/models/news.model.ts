@@ -5,5 +5,5 @@ export interface NewsModel {
   content: string;
   author: string;
   archiveDate?: Date;
-  _id: string;
+  _id?: string;
 }

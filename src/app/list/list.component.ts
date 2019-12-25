@@ -3,6 +3,8 @@ import { NewsModel } from '../models/news.model';
 import { NewsService } from '../services/news.service';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { NewsResponseModel } from '../models/news-response.model';
+import { NewsResponsePaginationModel } from '../models/news-response-pagination.model';
 
 @Component({
   selector: 'app-list',
@@ -17,7 +19,7 @@ export class ListComponent implements OnInit {
   constructor(
     private newsService: NewsService,
     private router: Router
-    ) {
+  ) {
 
   }
 
@@ -26,10 +28,8 @@ export class ListComponent implements OnInit {
   }
 
 
-
   getAllNews() {
-    // TODO: AÑADIR MODELADO
-    this.newsService.getNews().pipe(take(1)).subscribe((res: any) => {
+    this.newsService.getNews().pipe(take(1)).subscribe((res: NewsResponsePaginationModel) => {
       if (res && res.data && res.data.docs && res.data.docs.length > 0) {
         this.archivedNews = res.data.docs.filter(doc => doc.archiveDate !== undefined);
         this.news = res.data.docs.filter(doc => doc.archiveDate === undefined);
@@ -38,15 +38,19 @@ export class ListComponent implements OnInit {
   }
 
   deleteNew(id) {
-    this.newsService.deleteNews(id).pipe(take(1)).subscribe((res: any) => {
-      if (res && res.data) {
-        this.archivedNews = this.archivedNews.filter(doc => doc._id !== id);
-      }
-    });
+    this.newsService.deleteNews(id).pipe(take(1)).subscribe(
+      (res: NewsResponseModel) => {
+        if (res && res.data) {
+          this.archivedNews = this.archivedNews.filter(doc => doc._id !== id);
+        }
+      });
   }
 
   archiveNews(id) {
-    this.newsService.updateNews(id, { archiveDate: new Date() }).pipe(take(1)).subscribe((res: any) => {
+    this.newsService.updateNews(
+      id,
+      { archiveDate: new Date() }
+    ).pipe(take(1)).subscribe((res: NewsResponseModel) => {
       if (res && res.data) {
         const newsToMove = this.news.find(doc => doc._id === id);
         if (newsToMove) {

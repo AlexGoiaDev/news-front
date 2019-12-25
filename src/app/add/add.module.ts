@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AddRoutingModule } from './add-routing.module';
 import { AddComponent } from './add.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NewsService } from '../services/news.service';
 
 
 @NgModule({
@@ -12,6 +13,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     AddRoutingModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    NewsService
   ]
 })
 export class AddModule { }
