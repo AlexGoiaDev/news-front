@@ -1,8 +1,8 @@
 <div class="card p-3 m-0">
   <div *ngIf="new.archiveDate" class="archived-tag">Archived {{new.archiveDate | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
   <h3>{{new.title}}</h3>
-  <p>Descripcion: {{new.description}}</p>
-  <p>Cotenido: {{new.content}}</p>
+  <p>{{new.description}}</p>
+  <p>{{new.content}}</p>
   <div class="buttons">
     <button *ngIf="new.archiveDate" type="button" class="btn btn-danger" (click)="delete(new._id)">Delete</button>
     <button *ngIf="!new.archiveDate" type="button" class="btn btn-primary" (click)="archive(new._id)">Archive</button>
